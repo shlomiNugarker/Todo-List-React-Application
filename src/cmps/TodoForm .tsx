@@ -1,10 +1,14 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
+import { Task } from "../interfaces/Task";
 
-const TodoForm = ({ onAddTask }: any) => {
-  const [task, setTask] = useState("");
-  const [assignee, setAssignee] = useState("");
-  const [priority, setPriority] = useState("Low");
+interface Props {
+  onAddTask: (t: Task) => void;
+}
+
+const TodoForm = ({ onAddTask }: Props) => {
+  const [task, setTask] = useState<string>("");
+  const [assignee, setAssignee] = useState<string>("");
+  const [priority, setPriority] = useState<string>("Low");
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
