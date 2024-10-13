@@ -1,7 +1,19 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState } from "react";
+import TodoForm from "./cmps/TodoForm ";
+
 function App() {
+  const [tasks, setTasks] = useState<any[]>([]);
+
+  const addTask = (newTask: any[]) => {
+    setTasks([...tasks, newTask]);
+  };
   return (
     <>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
+      <div>
+        <h1>Todo List</h1>
+        <TodoForm onAddTask={addTask} />
+      </div>
     </>
   );
 }
