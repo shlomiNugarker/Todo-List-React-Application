@@ -1,6 +1,7 @@
 import { useState } from "react";
 import TodoForm from "./cmps/TodoForm ";
 import { Task } from "./interfaces/Task";
+import TodoListTable from "./cmps/TodoListTable";
 
 function App() {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -13,6 +14,7 @@ function App() {
       <div>
         <h1>Todo List</h1>
         <TodoForm onAddTask={addTask} />
+        <TodoListTable tasks={tasks} />
       </div>
     </>
   );
