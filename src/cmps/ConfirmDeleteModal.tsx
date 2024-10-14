@@ -67,14 +67,14 @@ const ConfirmDeleteModal: React.FC<ConfirmDeleteModalProps> = ({
               </h3>
               <button
                 type="button"
-                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center"
+                className="bg-red-500 text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center"
                 onClick={onConfirm}
               >
                 Yes, I'm sure
               </button>
               <button
                 type="button"
-                className="py-2.5 px-5 ml-3 text-sm font-medium focus:outline-none rounded-lg border focus:z-10 focus:ring-4  focus:ring-gray-700 bg-gray-800text-gray-400 border-gray-600 text-white hover:bg-gray-700"
+                className="  py-2.5 px-5 ml-3 text-sm font-medium focus:outline-none rounded-lg border focus:z-10 focus:ring-4  focus:ring-gray-700 bg-gray-800text-gray-400 border-gray-600 text-white hover:bg-gray-700"
                 onClick={onClose}
               >
                 No, cancel

@@ -1,4 +1,4 @@
-import { Priority } from "../interfaces/Task";
+import { Priority } from "../types";
 
 interface Props {
   assigneeFilter: string;
@@ -20,7 +20,7 @@ export const TaskFilters = ({
   resetFilters,
 }: Props) => {
   const selectClasses =
-    "flex justify-center border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500";
+    "flex justify-center border  text-white text-sm rounded-lg w-full p-2.5 bg-gray-600 border-gray-600 placeholder-gray-400";
 
   return (
     <div className="flex gap-4 mb-4">
@@ -34,12 +34,18 @@ export const TaskFilters = ({
         <select
           id="assigneeFilter"
           aria-label="Filter by Assignee"
-          className={selectClasses}
+          className={
+            "flex justify-center border  text-white text-sm rounded-lg   w-full p-2.5 bg-gray-600 border-gray-600 placeholder-gray-400"
+          }
           value={assigneeFilter}
           onChange={(e) => setAssigneeFilter(e.target.value)}
         >
           {availableAssignees.map((assignee) => (
-            <option key={assignee} value={assignee}>
+            <option
+              key={assignee}
+              value={assignee}
+              className="hover:bg-blue-600"
+            >
               {assignee}
             </option>
           ))}
@@ -73,7 +79,7 @@ export const TaskFilters = ({
           className={`${selectClasses} ${
             assigneeFilter === "All" && priorityFilter === "All"
               ? "cursor-not-allowed bg-gray-600 text-gray-500"
-              : " text-white bg-blue-600 hover:bg-blue-700"
+              : " text-white bg-blue-800 hover:bg-blue-600"
           }`}
           onClick={resetFilters}
           disabled={assigneeFilter === "All" && priorityFilter === "All"}

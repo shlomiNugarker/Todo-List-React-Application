@@ -7,7 +7,7 @@ import {
   SortingState,
 } from "@tanstack/react-table";
 import { useMemo, useCallback } from "react";
-import { Task } from "../interfaces/Task";
+import { Task } from "../types";
 import MemoizedTableRow from "./MemoizedTableRow";
 
 interface Props {
@@ -131,10 +131,10 @@ const TodoListTable = ({
   const tableClassNames =
     "w-full text-sm text-left rtl:text-right text-gray-500 text-gray-400";
   const thClassNames =
-    "text-center px-3 py-2 sm:px-6 sm:py-3 bg-gray-50 bg-gray-800 cursor-pointer text-xl";
+    "text-center px-3 py-2 sm:px-6 sm:py-3 bg-gray-50 bg-gray-800 cursor-pointer text-xl sm:text-l";
 
   return (
-    <div className="sm:w-ful relative overflow-x-auto shadow-md rounded-lg   ">
+    <div className="w-full relative overflow-x-auto shadow-md rounded-lg   ">
       {tasks.length === 0 ? (
         <div className="flex justify-center items-center ">
           <p>No tasks available</p>

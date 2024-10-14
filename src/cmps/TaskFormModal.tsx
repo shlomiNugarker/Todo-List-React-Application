@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Task } from "../interfaces/Task";
+import { Task } from "../types";
 
 interface Props {
   saveTask: (task: Task) => void;
@@ -73,11 +73,25 @@ const TaskFormModal = ({ saveTask, close, task }: Props) => {
               {taskToSave.id ? "Edit Task" : "Add Task"}
             </h3>
             <button
-              className="p-1 ml-auto bg-transparent border-0 text-white float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+              className="flex items-center absolute top-3 right-2.5 text-gray-400 bg-transparent rounded-lg text-sm w-8 h-8  justify-center items-cente hover:bg-gray-600 hover:text-white"
               onClick={close}
             >
-              <span className="bg-transparent text-white h-6 w-6 text-2xl block outline-none focus:outline-none">
-                ×
+              <span className="bg-transparent text-white h-6 w-6 text-2xl  outline-none focus:outline-none flex justify-center items-center">
+                <svg
+                  className="w-3 h-3"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 14 14"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M1 1l6 6m0 0l6 6M7 7l6-6M7 7L1 13"
+                  />
+                </svg>
               </span>
             </button>
           </div>

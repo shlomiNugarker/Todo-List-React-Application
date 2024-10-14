@@ -1,4 +1,4 @@
-import { generateRandomId } from "./services/utils";
+import { generateRandomId } from "./utils";
 
 export const tasksData = [
   {
