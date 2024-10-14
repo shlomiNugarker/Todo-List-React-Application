@@ -20,14 +20,14 @@ export const TaskFilters = ({
   resetFilters,
 }: Props) => {
   const selectClasses =
-    "border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500";
+    "flex justify-center border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500";
 
   return (
     <div className="flex gap-4 mb-4">
       <div className="flex flex-col text-center">
         <label
           htmlFor="assigneeFilter"
-          className="text-sm font-medium text-gray-400 mb-1"
+          className=" font-medium text-gray-400 mb-1 text-xl"
         >
           Assignee
         </label>
@@ -49,7 +49,7 @@ export const TaskFilters = ({
       <div className="flex flex-col text-center">
         <label
           htmlFor="priorityFilter"
-          className="text-sm font-medium text-gray-400 mb-1"
+          className="font-medium text-gray-400 mb-1 text-xl"
         >
           Priority
         </label>
@@ -68,7 +68,7 @@ export const TaskFilters = ({
         </select>
       </div>
       <div className="flex flex-col text-center">
-        <div className="text-sm font-medium text-gray-400 mb-1">Reset</div>
+        <div className="font-medium text-gray-400 mb-1 text-xl">Reset</div>
         <button
           className={`${selectClasses} ${
             assigneeFilter === "All" && priorityFilter === "All"

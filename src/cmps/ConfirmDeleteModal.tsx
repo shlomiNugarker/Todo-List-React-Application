@@ -20,13 +20,13 @@ const ConfirmDeleteModal: React.FC<ConfirmDeleteModalProps> = ({
       <div
         id="popup-modal"
         tabIndex={-1}
-        className="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h-[calc(100%-1rem)] max-h-full overflow-y-auto overflow-x-hidden"
+        className={`fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h-[calc(100%-1rem)] max-h-full overflow-y-auto overflow-x-hidden`}
       >
         <div className="relative p-4 w-full max-w-md max-h-full">
           <div className="relative  rounded-lg shadow bg-gray-800">
             <button
               type="button"
-              className="absolute top-3 right-2.5 text-gray-400 bg-transparent rounded-lg text-sm w-8 h-8 inline-flex justify-center items-cente hover:bg-gray-600 hover:text-white"
+              className="flex items-center absolute top-3 right-2.5 text-gray-400 bg-transparent rounded-lg text-sm w-8 h-8  justify-center items-cente hover:bg-gray-600 hover:text-white"
               onClick={onClose}
             >
               <svg
@@ -74,7 +74,7 @@ const ConfirmDeleteModal: React.FC<ConfirmDeleteModalProps> = ({
               </button>
               <button
                 type="button"
-                className="py-2.5 px-5 ml-3 text-sm font-medium text-gray-900 focus:outline-none rounded-lg border focus:z-10 focus:ring-4  focus:ring-gray-700 bg-gray-800text-gray-400 border-gray-600 hover:text-white hover:bg-gray-700"
+                className="py-2.5 px-5 ml-3 text-sm font-medium focus:outline-none rounded-lg border focus:z-10 focus:ring-4  focus:ring-gray-700 bg-gray-800text-gray-400 border-gray-600 text-white hover:bg-gray-700"
                 onClick={onClose}
               >
                 No, cancel

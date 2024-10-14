@@ -131,22 +131,30 @@ const TodoListTable = ({
   const tableClassNames =
     "w-full text-sm text-left rtl:text-right text-gray-500 text-gray-400";
   const thClassNames =
-    "text-center px-3 py-2 sm:px-6 sm:py-3 bg-gray-50 bg-gray-800 cursor-pointer ";
+    "text-center px-3 py-2 sm:px-6 sm:py-3 bg-gray-50 bg-gray-800 cursor-pointer text-xl";
 
   return (
-    <div className="relative overflow-x-auto shadow-md rounded-lg h-[70vh] w-[90vw] ">
+    <div className="sm:w-ful relative overflow-x-auto shadow-md rounded-lg   ">
       {tasks.length === 0 ? (
-        <div className="flex justify-center items-center h-[70vh]">
+        <div className="flex justify-center items-center ">
           <p>No tasks available</p>
         </div>
       ) : (
         <table className={tableClassNames}>
           <thead className="sticky top-0 bg-gray-800 z-10 border-b-1">
             {table.getHeaderGroups().map((headerGroup) => (
-              <tr key={headerGroup.id} className="flex flex-col sm:table-row">
+              <tr
+                key={headerGroup.id}
+                className={"flex flex-col sm:table-row text-2xl " + ""}
+              >
                 {headerGroup.headers.map((header) => (
                   <th
-                    className={thClassNames}
+                    className={`${thClassNames} ${
+                      header.column.id === "edit" ||
+                      header.column.id === "delete"
+                        ? "hidden sm:table-cell"
+                        : ""
+                    }`}
                     key={header.id}
                     onClick={header.column.getToggleSortingHandler()}
                   >
@@ -164,7 +172,7 @@ const TodoListTable = ({
               </tr>
             ))}
           </thead>
-          <tbody className="">
+          <tbody className="bg-gray-900">
             {table.getRowModel().rows.map((row) => (
               <MemoizedTableRow key={row.id} row={row} />
             ))}

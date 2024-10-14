@@ -66,10 +66,10 @@ const TaskFormModal = ({ saveTask, close, task }: Props) => {
         onSubmit={handleSubmit}
         className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed  z-50 outline-none focus:outline-none min-w-[30vw]"
       >
-        <div className="relative my-6 mx-auto max-w-3xl border-0 rounded-lg shadow-lg flex flex-col w-full  bg-gray-800 text-white outline-none focus:outline-none">
+        <div className="relative my-6 mx-auto max-w-3xl border-0 rounded-lg shadow-lg flex flex-col w-full bg-gray-800 text-white outline-none focus:outline-none">
           {/* Header */}
           <div className="flex items-start justify-between p-5 border-b  border-gray-700 rounded-t">
-            <h3 className="text-3xl font-semibold">
+            <h3 className="text-2xl font-semibold">
               {taskToSave.id ? "Edit Task" : "Add Task"}
             </h3>
             <button
@@ -100,7 +100,7 @@ const TaskFormModal = ({ saveTask, close, task }: Props) => {
                 ref={taskInputRef}
                 className={`border ${
                   errors.task ? "border-red-500" : "border-gray-300"
-                }  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5bg-gray-700 border-gray-600 placeholder-gray-400 text-white`}
+                }  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white`}
               />
               {errors.task && (
                 <p className="text-red-500 text-sm mt-1">{errors.task}</p>
@@ -132,7 +132,7 @@ const TaskFormModal = ({ saveTask, close, task }: Props) => {
             <div>
               <label
                 htmlFor="priority"
-                className="block mb-2 text-sm font-medium text-gray-900 text-gray-300"
+                className="block mb-2 text-sm font-medium  text-gray-300"
               >
                 Priority:
               </label>
