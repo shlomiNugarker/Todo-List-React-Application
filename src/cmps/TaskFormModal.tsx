@@ -9,6 +9,9 @@ interface Props {
 
 const TaskFormModal = ({ saveTask, close, task }: Props) => {
   const [taskToSave, setTaskToSave] = useState<Task>({ ...task });
+  const [errors, setErrors] = useState<{ task?: string; assignee?: string }>(
+    {}
+  );
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -18,15 +21,43 @@ const TaskFormModal = ({ saveTask, close, task }: Props) => {
       ...prev,
       [id]: value,
     }));
+
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [id]: "",
+    }));
+  };
+
+  const validateForm = () => {
+    const newErrors: { task?: string; assignee?: string } = {};
+
+    if (!taskToSave.task.trim()) {
+      newErrors.task = "Task description is required.";
+    }
+
+    if (!taskToSave.assignee.trim()) {
+      newErrors.assignee = "Assignee is required.";
+    }
+
+    setErrors(newErrors);
+
+    // Return true if there are no errors
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = (ev: React.FormEvent) => {
+    ev.preventDefault();
+
+    // Validate the form before submitting
+    if (validateForm()) {
+      saveTask(taskToSave);
+    }
   };
 
   return (
     <>
       <form
-        onSubmit={(ev) => {
-          ev.preventDefault();
-          saveTask(taskToSave);
-        }}
+        onSubmit={handleSubmit}
         className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed  z-50 outline-none focus:outline-none min-w-[30vw]"
       >
         <div className="relative my-6 mx-auto max-w-3xl border-0 rounded-lg shadow-lg flex flex-col w-full bg-white dark:bg-gray-800 dark:text-white outline-none focus:outline-none">
@@ -59,10 +90,15 @@ const TaskFormModal = ({ saveTask, close, task }: Props) => {
                 type="text"
                 value={taskToSave.task}
                 onChange={handleInputChange}
-                required
+                // required
                 aria-label="Task Description"
-                className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                className={`border ${
+                  errors.task ? "border-red-500" : "border-gray-300"
+                } text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white`}
               />
+              {errors.task && (
+                <p className="text-red-500 text-sm mt-1">{errors.task}</p>
+              )}
             </div>
 
             <div>
@@ -77,10 +113,15 @@ const TaskFormModal = ({ saveTask, close, task }: Props) => {
                 type="text"
                 value={taskToSave.assignee}
                 onChange={handleInputChange}
-                required
+                // required
                 aria-label="Assignee Name"
-                className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                className={`border ${
+                  errors.assignee ? "border-red-500" : "border-gray-300"
+                } text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white`}
               />
+              {errors.assignee && (
+                <p className="text-red-500 text-sm mt-1">{errors.assignee}</p>
+              )}
             </div>
 
             <div>
