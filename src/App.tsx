@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
-import { Priority, Task } from "./interfaces/Task";
+import { Priority, Task } from "./types";
 import TodoListTable from "./cmps/TodoListTable";
 import TaskFormModal from "./cmps/TaskFormModal";
 import ConfirmDeleteModal from "./cmps/ConfirmDeleteModal";
 import { tasksData } from "./data";
-import { generateRandomId } from "./services/utils";
+import { generateRandomId } from "./utils";
 import { SortingState } from "@tanstack/react-table";
 import { TaskFilters } from "./cmps/TaskFilters";
 
@@ -20,6 +20,7 @@ function App() {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [assigneeFilter, setAssigneeFilter] = useState<string>("All");
   const [priorityFilter, setPriorityFilter] = useState<Priority>("All");
+  const [notification, setNotification] = useState<string | null>(null);
   const emptyTask: Task = { task: "", assignee: "", priority: "Low" };
 
   useEffect(() => {
@@ -40,6 +41,7 @@ function App() {
 
   const addTask = (newTask: Task) => {
     setTasks([...tasks, newTask]);
+    showNotification("Task added successfully!");
   };
 
   const editTask = (updatedTask: Task) => {
@@ -47,6 +49,7 @@ function App() {
       task.id === updatedTask.id ? updatedTask : task
     );
     setTasks(updatedTasks);
+    showNotification("Task edited successfully!");
   };
 
   const onClickEdit = (taskToEdit: Task | null) => {
@@ -62,8 +65,15 @@ function App() {
       const updatedTasks = tasks.filter((task) => task.id !== taskToDelete.id);
       setTasks(updatedTasks);
       setTaskToDelete(null);
-      setTaskToDelete(null);
+      showNotification("Task deleted successfully!");
     }
+  };
+
+  const showNotification = (message: string) => {
+    setNotification(message);
+    setTimeout(() => {
+      setNotification(null);
+    }, 3000);
   };
 
   const saveTask = (task: Task) => {
@@ -143,6 +153,12 @@ function App() {
             message="Are you sure you want to delete this task?"
           />
         </div>
+
+        {notification && (
+          <div className="fixed top-4 right-4 bg-emerald-500 text-white p-3 rounded-lg shadow-md z-50">
+            {notification}
+          </div>
+        )}
       </main>
     </>
   );
