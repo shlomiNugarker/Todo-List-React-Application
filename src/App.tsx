@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Priority, Task } from "./interfaces/Task";
 import TodoListTable from "./cmps/TodoListTable";
 import TaskFormModal from "./cmps/TaskFormModal";
@@ -9,13 +9,22 @@ import { SortingState } from "@tanstack/react-table";
 import { TaskFilters } from "./cmps/TaskFilters";
 
 function App() {
-  const [tasks, setTasks] = useState<Task[]>(tasksData as Task[]);
+  const [tasks, setTasks] = useState<Task[]>(() => {
+    const savedTasks = localStorage.getItem("tasks");
+    return savedTasks && savedTasks.length > 2
+      ? JSON.parse(savedTasks)
+      : tasksData;
+  });
   const [taskToEdit, setTaskToEdit] = useState<Task | null>(null);
   const [taskToDelete, setTaskToDelete] = useState<Task | null>(null);
   const [sorting, setSorting] = useState<SortingState>([]);
   const [assigneeFilter, setAssigneeFilter] = useState<string>("All");
   const [priorityFilter, setPriorityFilter] = useState<Priority>("All");
   const emptyTask: Task = { task: "", assignee: "", priority: "Low" };
+
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
 
   const filteredTasks = useMemo(() => {
     return tasks
@@ -77,8 +86,8 @@ function App() {
 
   return (
     <>
-      <main className="min-h-screen flex justify-center items-center p-4">
-        <div className="flex justify-center items-center flex-col ">
+      <main className="h-screen flex justify-center items-center p-4">
+        <div className="flex justify-center items-center flex-col h-full">
           <h1 className="mb-2 text-4xl font-medium leading-tight text-gray-400">
             Todo List
           </h1>
@@ -103,7 +112,7 @@ function App() {
             onClick={() => {
               setTaskToEdit(emptyTask);
             }}
-            className="mt-4 block text-white hover:bg-blue-800 focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-blue-600hover:bg-blue-70 focus:ring-blue-800"
+            className="mt-4 block text-gray-100 bg-blue-800 hover:bg-blue-600 focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-blue-600hover:bg-blue-70 focus:ring-blue-800"
             type="button"
           >
             <svg
