@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { Priority, Task } from "./interfaces/Task";
 import TodoListTable from "./cmps/TodoListTable";
 import TaskFormModal from "./cmps/TaskFormModal";
+import ConfirmDeleteModal from "./cmps/ConfirmDeleteModal";
 import { tasksData } from "./data";
 import { generateRandomId } from "./services/utils";
 import { SortingState } from "@tanstack/react-table";
@@ -9,20 +10,23 @@ import { TaskFilters } from "./cmps/TaskFilters";
 
 function App() {
   const [tasks, setTasks] = useState<Task[]>(tasksData as Task[]);
-  const [taskToEdit, setTaskToEdit] = useState<Task | null>(null); // Add/Edit Task in modal
+  const [taskToEdit, setTaskToEdit] = useState<Task | null>(null);
+  const [taskToDelete, setTaskToDelete] = useState<Task | null>(null);
   const [sorting, setSorting] = useState<SortingState>([]);
   const [assigneeFilter, setAssigneeFilter] = useState<string>("All");
   const [priorityFilter, setPriorityFilter] = useState<Priority>("All");
   const emptyTask: Task = { task: "", assignee: "", priority: "Low" };
 
   const filteredTasks = useMemo(() => {
-    return tasks.filter((task) => {
-      const assigneeMatches =
-        assigneeFilter === "All" || task.assignee === assigneeFilter;
-      const priorityMatches =
-        priorityFilter === "All" || task.priority === priorityFilter;
-      return assigneeMatches && priorityMatches;
-    });
+    return tasks
+      .filter((task) => {
+        const assigneeMatches =
+          assigneeFilter === "All" || task.assignee === assigneeFilter;
+        const priorityMatches =
+          priorityFilter === "All" || task.priority === priorityFilter;
+        return assigneeMatches && priorityMatches;
+      })
+      .reverse();
   }, [assigneeFilter, priorityFilter, tasks]);
 
   const addTask = (newTask: Task) => {
@@ -40,10 +44,16 @@ function App() {
     setTaskToEdit(taskToEdit);
   };
 
-  const deleteTask = (taskToDelete: Task) => {
-    if (window.confirm("Are you sure you want to delete this task?")) {
+  const onClickDelete = (task: Task) => {
+    setTaskToDelete(task);
+  };
+
+  const confirmDeleteTask = () => {
+    if (taskToDelete) {
       const updatedTasks = tasks.filter((task) => task.id !== taskToDelete.id);
       setTasks(updatedTasks);
+      setTaskToDelete(null);
+      setTaskToDelete(null);
     }
   };
 
@@ -84,7 +94,7 @@ function App() {
           <TodoListTable
             tasks={filteredTasks}
             onClickEdit={onClickEdit}
-            deleteTask={deleteTask}
+            deleteTask={onClickDelete} // Change to trigger the delete modal
             sorting={sorting}
             setSorting={setSorting}
           />
@@ -110,13 +120,19 @@ function App() {
               <path d="M176 474h672q8 0 8 8v60q0 8-8 8H176q-8 0-8-8v-60q0-8 8-8z" />
             </svg>
           </button>
-          {taskToEdit && (
+          {!!taskToEdit && (
             <TaskFormModal
               close={() => setTaskToEdit(null)}
               saveTask={saveTask}
               task={taskToEdit}
             />
           )}
+          <ConfirmDeleteModal
+            isOpen={!!taskToDelete}
+            onClose={() => setTaskToDelete(null)}
+            onConfirm={confirmDeleteTask}
+            message="Are you sure you want to delete this task?"
+          />
         </div>
       </main>
     </>
