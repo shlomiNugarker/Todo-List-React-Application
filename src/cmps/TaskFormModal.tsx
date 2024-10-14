@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Task } from "../interfaces/Task";
 
 interface Props {
@@ -12,6 +12,14 @@ const TaskFormModal = ({ saveTask, close, task }: Props) => {
   const [errors, setErrors] = useState<{ task?: string; assignee?: string }>(
     {}
   );
+
+  const taskInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (taskInputRef.current) {
+      taskInputRef.current.focus();
+    }
+  }, []);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -58,17 +66,17 @@ const TaskFormModal = ({ saveTask, close, task }: Props) => {
         onSubmit={handleSubmit}
         className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed  z-50 outline-none focus:outline-none min-w-[30vw]"
       >
-        <div className="relative my-6 mx-auto max-w-3xl border-0 rounded-lg shadow-lg flex flex-col w-full bg-white dark:bg-gray-800 dark:text-white outline-none focus:outline-none">
+        <div className="relative my-6 mx-auto max-w-3xl border-0 rounded-lg shadow-lg flex flex-col w-full  bg-gray-800 text-white outline-none focus:outline-none">
           {/* Header */}
-          <div className="flex items-start justify-between p-5 border-b border-gray-200 dark:border-gray-700 rounded-t">
+          <div className="flex items-start justify-between p-5 border-b  border-gray-700 rounded-t">
             <h3 className="text-3xl font-semibold">
               {taskToSave.id ? "Edit Task" : "Add Task"}
             </h3>
             <button
-              className="p-1 ml-auto bg-transparent border-0 text-black dark:text-white float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+              className="p-1 ml-auto bg-transparent border-0 text-white float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
               onClick={close}
             >
-              <span className="bg-transparent text-black dark:text-white h-6 w-6 text-2xl block outline-none focus:outline-none">
+              <span className="bg-transparent text-white h-6 w-6 text-2xl block outline-none focus:outline-none">
                 ×
               </span>
             </button>
@@ -79,7 +87,7 @@ const TaskFormModal = ({ saveTask, close, task }: Props) => {
             <div>
               <label
                 htmlFor="task"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                className="block mb-2 text-sm font-medium text-gray-300"
               >
                 Task:
               </label>
@@ -89,9 +97,10 @@ const TaskFormModal = ({ saveTask, close, task }: Props) => {
                 value={taskToSave.task}
                 onChange={handleInputChange}
                 aria-label="Task Description"
+                ref={taskInputRef}
                 className={`border ${
                   errors.task ? "border-red-500" : "border-gray-300"
-                } text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white`}
+                }  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5bg-gray-700 border-gray-600 placeholder-gray-400 text-white`}
               />
               {errors.task && (
                 <p className="text-red-500 text-sm mt-1">{errors.task}</p>
@@ -101,7 +110,7 @@ const TaskFormModal = ({ saveTask, close, task }: Props) => {
             <div>
               <label
                 htmlFor="assignee"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                className="block mb-2 text-sm font-medium text-gray-300"
               >
                 Assignee:
               </label>
@@ -113,7 +122,7 @@ const TaskFormModal = ({ saveTask, close, task }: Props) => {
                 aria-label="Assignee Name"
                 className={`border ${
                   errors.assignee ? "border-red-500" : "border-gray-300"
-                } text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white`}
+                }  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white`}
               />
               {errors.assignee && (
                 <p className="text-red-500 text-sm mt-1">{errors.assignee}</p>
@@ -123,7 +132,7 @@ const TaskFormModal = ({ saveTask, close, task }: Props) => {
             <div>
               <label
                 htmlFor="priority"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                className="block mb-2 text-sm font-medium text-gray-900 text-gray-300"
               >
                 Priority:
               </label>
@@ -132,7 +141,7 @@ const TaskFormModal = ({ saveTask, close, task }: Props) => {
                 aria-label="Priority Level"
                 value={taskToSave.priority}
                 onChange={handleInputChange}
-                className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                className="border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white"
               >
                 {["High", "Medium", "Low"].map((priority) => (
                   <option key={priority} value={priority}>
@@ -144,7 +153,7 @@ const TaskFormModal = ({ saveTask, close, task }: Props) => {
           </div>
 
           {/* Footer */}
-          <div className="flex items-center justify-end p-6 border-t border-gray-200 dark:border-gray-700 rounded-b">
+          <div className="flex items-center justify-end p-6 border-t border-gray-700 rounded-b">
             <button
               className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
               type="button"
