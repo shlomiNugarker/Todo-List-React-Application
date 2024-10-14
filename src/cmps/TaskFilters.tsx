@@ -67,12 +67,16 @@ export const TaskFilters = ({
           ))}
         </select>
       </div>
-      <div className="lex flex-col text-center">
+      <div className="flex flex-col text-center">
         <div className="text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">
           Reset
         </div>
         <button
-          className={selectClasses}
+          className={`${selectClasses} ${
+            assigneeFilter === "All" && priorityFilter === "All"
+              ? "bg-gray-300 text-gray-500 cursor-not-allowed dark:bg-gray-600 dark:text-gray-500"
+              : "bg-blue-700 text-white hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700"
+          }`}
           onClick={resetFilters}
           disabled={assigneeFilter === "All" && priorityFilter === "All"}
         >
