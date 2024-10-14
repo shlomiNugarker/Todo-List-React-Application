@@ -18,6 +18,13 @@ interface Props {
   setSorting: React.Dispatch<React.SetStateAction<SortingState>>;
 }
 
+const priorityOrder = {
+  High: 1,
+  Medium: 2,
+  Low: 3,
+  All: 4,
+};
+
 const TodoListTable = ({
   tasks,
   onClickEdit,
@@ -52,6 +59,11 @@ const TodoListTable = ({
       {
         accessorKey: "priority",
         header: "Priority",
+        sortingFn: (rowA, rowB) => {
+          const priorityA = priorityOrder[rowA.original.priority];
+          const priorityB = priorityOrder[rowB.original.priority];
+          return priorityA - priorityB;
+        },
       },
       {
         accessorKey: "edit",
