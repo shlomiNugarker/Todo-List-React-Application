@@ -20,14 +20,14 @@ export const TaskFilters = ({
   resetFilters,
 }: Props) => {
   const selectClasses =
-    "border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
+    "border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500";
 
   return (
     <div className="flex gap-4 mb-4">
       <div className="flex flex-col text-center">
         <label
           htmlFor="assigneeFilter"
-          className="text-sm font-medium text-gray-700 dark:text-gray-400 mb-1"
+          className="text-sm font-medium text-gray-400 mb-1"
         >
           Assignee
         </label>
@@ -49,7 +49,7 @@ export const TaskFilters = ({
       <div className="flex flex-col text-center">
         <label
           htmlFor="priorityFilter"
-          className="text-sm font-medium text-gray-700 dark:text-gray-400 mb-1"
+          className="text-sm font-medium text-gray-400 mb-1"
         >
           Priority
         </label>
@@ -68,14 +68,12 @@ export const TaskFilters = ({
         </select>
       </div>
       <div className="flex flex-col text-center">
-        <div className="text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">
-          Reset
-        </div>
+        <div className="text-sm font-medium text-gray-400 mb-1">Reset</div>
         <button
           className={`${selectClasses} ${
             assigneeFilter === "All" && priorityFilter === "All"
-              ? "bg-gray-300 text-gray-500 cursor-not-allowed dark:bg-gray-600 dark:text-gray-500"
-              : "bg-blue-700 text-white hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700"
+              ? "cursor-not-allowed bg-gray-600 text-gray-500"
+              : " text-white bg-blue-600 hover:bg-blue-700"
           }`}
           onClick={resetFilters}
           disabled={assigneeFilter === "All" && priorityFilter === "All"}

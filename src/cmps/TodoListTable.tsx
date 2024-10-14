@@ -129,9 +129,9 @@ const TodoListTable = ({
   });
 
   const tableClassNames =
-    "w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400";
+    "w-full text-sm text-left rtl:text-right text-gray-500 text-gray-400";
   const thClassNames =
-    "text-center px-3 py-2 sm:px-6 sm:py-3 bg-gray-50 dark:bg-gray-800 cursor-pointer ";
+    "text-center px-3 py-2 sm:px-6 sm:py-3 bg-gray-50 bg-gray-800 cursor-pointer ";
 
   return (
     <div className="relative overflow-x-auto shadow-md rounded-lg h-[70vh] w-[90vw] ">
@@ -141,7 +141,7 @@ const TodoListTable = ({
         </div>
       ) : (
         <table className={tableClassNames}>
-          <thead className="sticky top-0 bg-gray-50 dark:bg-gray-800 z-10 border-b-1">
+          <thead className="sticky top-0 bg-gray-800 z-10 border-b-1">
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id} className="flex flex-col sm:table-row">
                 {headerGroup.headers.map((header) => (

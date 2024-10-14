@@ -60,7 +60,7 @@ function App() {
   const saveTask = (task: Task) => {
     if (task.id) editTask(task);
     else addTask({ ...task, id: generateRandomId() });
-    setTaskToEdit(null); // will close the modal
+    setTaskToEdit(null);
   };
 
   const resetFilters = () => {
@@ -79,7 +79,7 @@ function App() {
     <>
       <main className="min-h-screen flex justify-center items-center p-4">
         <div className="flex justify-center items-center flex-col ">
-          <h1 className="mb-2 text-4xl font-medium leading-tight text-gray-700 dark:text-gray-400">
+          <h1 className="mb-2 text-4xl font-medium leading-tight text-gray-400">
             Todo List
           </h1>
           <TaskFilters
@@ -94,7 +94,7 @@ function App() {
           <TodoListTable
             tasks={filteredTasks}
             onClickEdit={onClickEdit}
-            deleteTask={onClickDelete} // Change to trigger the delete modal
+            deleteTask={onClickDelete}
             sorting={sorting}
             setSorting={setSorting}
           />
@@ -103,7 +103,7 @@ function App() {
             onClick={() => {
               setTaskToEdit(emptyTask);
             }}
-            className="mt-4 block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            className="mt-4 block text-white hover:bg-blue-800 focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-blue-600hover:bg-blue-70 focus:ring-blue-800"
             type="button"
           >
             <svg
