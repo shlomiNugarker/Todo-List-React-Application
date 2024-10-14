@@ -41,14 +41,12 @@ const TaskFormModal = ({ saveTask, close, task }: Props) => {
 
     setErrors(newErrors);
 
-    // Return true if there are no errors
     return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = (ev: React.FormEvent) => {
     ev.preventDefault();
 
-    // Validate the form before submitting
     if (validateForm()) {
       saveTask(taskToSave);
     }
@@ -90,7 +88,6 @@ const TaskFormModal = ({ saveTask, close, task }: Props) => {
                 type="text"
                 value={taskToSave.task}
                 onChange={handleInputChange}
-                // required
                 aria-label="Task Description"
                 className={`border ${
                   errors.task ? "border-red-500" : "border-gray-300"
@@ -113,7 +110,6 @@ const TaskFormModal = ({ saveTask, close, task }: Props) => {
                 type="text"
                 value={taskToSave.assignee}
                 onChange={handleInputChange}
-                // required
                 aria-label="Assignee Name"
                 className={`border ${
                   errors.assignee ? "border-red-500" : "border-gray-300"

@@ -8,7 +8,7 @@ interface Props {
 
 const MemoizedTableRow: React.FC<Props> = React.memo(({ row }) => {
   return (
-    <tr>
+    <tr className="flex flex-col sm:table-row">
       {row.getVisibleCells().map((cell) => (
         <td
           key={cell.id}
