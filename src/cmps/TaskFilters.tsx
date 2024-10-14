@@ -71,7 +71,11 @@ export const TaskFilters = ({
         <div className="text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">
           Reset
         </div>
-        <button className={selectClasses} onClick={resetFilters}>
+        <button
+          className={selectClasses}
+          onClick={resetFilters}
+          disabled={assigneeFilter === "All" && priorityFilter === "All"}
+        >
           <svg
             className="text-xl"
             viewBox="0 0 21 21"
