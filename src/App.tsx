@@ -7,13 +7,14 @@ import { tasksData } from "./data";
 import { generateRandomId } from "./utils";
 import { SortingState } from "@tanstack/react-table";
 import { TaskFilters } from "./cmps/TaskFilters";
+import { AddIcon } from "./cmps/Icons";
+
+const emptyTask: Task = { task: "", assignee: "", priority: "Low" };
 
 function App() {
   const [tasks, setTasks] = useState<Task[]>(() => {
     const savedTasks = localStorage.getItem("tasks");
-    return savedTasks && savedTasks.length > 2
-      ? JSON.parse(savedTasks)
-      : tasksData;
+    return savedTasks ? JSON.parse(savedTasks) : tasksData;
   });
   const [taskToEdit, setTaskToEdit] = useState<Task | null>(null);
   const [taskToDelete, setTaskToDelete] = useState<Task | null>(null);
@@ -21,7 +22,6 @@ function App() {
   const [assigneeFilter, setAssigneeFilter] = useState<string>("All");
   const [priorityFilter, setPriorityFilter] = useState<Priority>("All");
   const [notification, setNotification] = useState<string | null>(null);
-  const emptyTask: Task = { task: "", assignee: "", priority: "Low" };
 
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
@@ -71,9 +71,11 @@ function App() {
 
   const showNotification = (message: string) => {
     setNotification(message);
-    setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       setNotification(null);
     }, 3000);
+
+    return () => clearTimeout(timeoutId);
   };
 
   const saveTask = (task: Task) => {
@@ -85,6 +87,7 @@ function App() {
   const resetFilters = () => {
     setAssigneeFilter("All");
     setPriorityFilter("All");
+    setSorting([]);
   };
 
   const availableAssignees = useMemo(() => {
@@ -125,19 +128,7 @@ function App() {
             className="mt-4 block text-gray-100 bg-blue-800 hover:bg-blue-600 focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-blue-600hover:bg-blue-70 focus:ring-blue-800"
             type="button"
           >
-            <svg
-              viewBox="0 0 1024 1024"
-              fill="currentColor"
-              height="1em"
-              width="1em"
-              className="text-3xl"
-            >
-              <defs>
-                <style />
-              </defs>
-              <path d="M482 152h60q8 0 8 8v704q0 8-8 8h-60q-8 0-8-8V160q0-8 8-8z" />
-              <path d="M176 474h672q8 0 8 8v60q0 8-8 8H176q-8 0-8-8v-60q0-8 8-8z" />
-            </svg>
+            <AddIcon className="text-3xl" />
           </button>
           {!!taskToEdit && (
             <TaskFormModal

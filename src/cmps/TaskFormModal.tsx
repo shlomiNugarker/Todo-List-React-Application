@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { Task } from "../types";
+import { CloseIcon } from "./Icons";
+import { SelectField } from "./SelectField";
+import InputField from "./InputField";
 
 interface Props {
   saveTask: (task: Task) => void;
@@ -8,7 +11,7 @@ interface Props {
 }
 
 const TaskFormModal = ({ saveTask, close, task }: Props) => {
-  const [taskToSave, setTaskToSave] = useState<Task>({ ...task });
+  const [taskToSave, setTaskToSave] = useState<Task>(task);
   const [errors, setErrors] = useState<{ task?: string; assignee?: string }>(
     {}
   );
@@ -16,9 +19,7 @@ const TaskFormModal = ({ saveTask, close, task }: Props) => {
   const taskInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (taskInputRef.current) {
-      taskInputRef.current.focus();
-    }
+    taskInputRef.current?.focus();
   }, []);
 
   const handleInputChange = (
@@ -42,13 +43,11 @@ const TaskFormModal = ({ saveTask, close, task }: Props) => {
     if (!taskToSave.task.trim()) {
       newErrors.task = "Task description is required.";
     }
-
     if (!taskToSave.assignee.trim()) {
       newErrors.assignee = "Assignee is required.";
     }
 
     setErrors(newErrors);
-
     return Object.keys(newErrors).length === 0;
   };
 
@@ -77,93 +76,36 @@ const TaskFormModal = ({ saveTask, close, task }: Props) => {
               onClick={close}
             >
               <span className="bg-transparent text-white h-6 w-6 text-2xl  outline-none focus:outline-none flex justify-center items-center">
-                <svg
-                  className="w-3 h-3"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 14 14"
-                >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M1 1l6 6m0 0l6 6M7 7l6-6M7 7L1 13"
-                  />
-                </svg>
+                <CloseIcon className="w-3 h-3" />
               </span>
             </button>
           </div>
 
           {/* Body */}
           <div className="p-6 space-y-4">
-            <div>
-              <label
-                htmlFor="task"
-                className="block mb-2 text-sm font-medium text-gray-300"
-              >
-                Task:
-              </label>
-              <input
-                id="task"
-                type="text"
-                value={taskToSave.task}
-                onChange={handleInputChange}
-                aria-label="Task Description"
-                ref={taskInputRef}
-                className={`border ${
-                  errors.task ? "border-red-500" : "border-gray-300"
-                }  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white`}
-              />
-              {errors.task && (
-                <p className="text-red-500 text-sm mt-1">{errors.task}</p>
-              )}
-            </div>
+            <InputField
+              id="task"
+              label="Task"
+              value={taskToSave.task}
+              error={errors.task}
+              handleChange={handleInputChange}
+              inputRef={taskInputRef}
+            />
+            <InputField
+              id="assignee"
+              label="Assignee"
+              value={taskToSave.assignee}
+              error={errors.assignee}
+              handleChange={handleInputChange}
+            />
 
-            <div>
-              <label
-                htmlFor="assignee"
-                className="block mb-2 text-sm font-medium text-gray-300"
-              >
-                Assignee:
-              </label>
-              <input
-                id="assignee"
-                type="text"
-                value={taskToSave.assignee}
-                onChange={handleInputChange}
-                aria-label="Assignee Name"
-                className={`border ${
-                  errors.assignee ? "border-red-500" : "border-gray-300"
-                }  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white`}
-              />
-              {errors.assignee && (
-                <p className="text-red-500 text-sm mt-1">{errors.assignee}</p>
-              )}
-            </div>
-
-            <div>
-              <label
-                htmlFor="priority"
-                className="block mb-2 text-sm font-medium  text-gray-300"
-              >
-                Priority:
-              </label>
-              <select
-                id="priority"
-                aria-label="Priority Level"
-                value={taskToSave.priority}
-                onChange={handleInputChange}
-                className="border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white"
-              >
-                {["High", "Medium", "Low"].map((priority) => (
-                  <option key={priority} value={priority}>
-                    {priority}
-                  </option>
-                ))}
-              </select>
-            </div>
+            <SelectField
+              id="priority"
+              label="Priority"
+              value={taskToSave.priority}
+              options={["High", "Medium", "Low"]}
+              handleChange={handleInputChange}
+            />
           </div>
 
           {/* Footer */}

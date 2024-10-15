@@ -1,4 +1,5 @@
 import React from "react";
+import { CloseIcon, ConfirmIcon } from "./Icons";
 
 interface ConfirmDeleteModalProps {
   isOpen: boolean;
@@ -23,45 +24,17 @@ const ConfirmDeleteModal: React.FC<ConfirmDeleteModalProps> = ({
         className={`fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h-[calc(100%-1rem)] max-h-full overflow-y-auto overflow-x-hidden`}
       >
         <div className="relative p-4 w-full max-w-md max-h-full">
-          <div className="relative  rounded-lg shadow bg-gray-800">
+          <div className="relative rounded-lg shadow bg-gray-800">
             <button
               type="button"
-              className="flex items-center absolute top-3 right-2.5 text-gray-400 bg-transparent rounded-lg text-sm w-8 h-8  justify-center items-cente hover:bg-gray-600 hover:text-white"
+              className="flex items-center absolute top-3 right-2.5 text-gray-400 bg-transparent rounded-lg text-sm w-8 h-8 justify-center items-cente hover:bg-gray-600 hover:text-white"
               onClick={onClose}
             >
-              <svg
-                className="w-3 h-3"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 14 14"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M1 1l6 6m0 0l6 6M7 7l6-6M7 7L1 13"
-                />
-              </svg>
+              <CloseIcon className="w-3 h-3" />
               <span className="sr-only">Close modal</span>
             </button>
             <div className="p-4 md:p-5 text-center">
-              <svg
-                className="mx-auto mb-4  w-12 h-12 text-gray-200"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                />
-              </svg>
+              <ConfirmIcon className="mx-auto mb-4 w-12 h-12 text-gray-200" />
               <h3 className="mb-5 text-lg font-normal text-gray-400">
                 {message}
               </h3>
@@ -74,7 +47,7 @@ const ConfirmDeleteModal: React.FC<ConfirmDeleteModalProps> = ({
               </button>
               <button
                 type="button"
-                className="  py-2.5 px-5 ml-3 text-sm font-medium focus:outline-none rounded-lg border focus:z-10 focus:ring-4  focus:ring-gray-700 bg-gray-800text-gray-400 border-gray-600 text-white hover:bg-gray-700"
+                className="  py-2.5 px-5 ml-3 text-sm font-medium focus:outline-none rounded-lg border focus:z-10 focus:ring-4 focus:ring-gray-700 bg-gray-800text-gray-400 border-gray-600 text-white hover:bg-gray-700"
                 onClick={onClose}
               >
                 No, cancel
