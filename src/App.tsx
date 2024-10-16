@@ -21,8 +21,7 @@ function App() {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [assigneeFilter, setAssigneeFilter] = useState<string>("All");
   const [priorityFilter, setPriorityFilter] = useState<Priority>("All");
-  const [notifications, setNotifications] = useState<string[]>([]); // Array of notifications
-
+  const [notifications, setNotifications] = useState<string[]>([]);
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
@@ -70,7 +69,7 @@ function App() {
   };
 
   const showNotification = (message: string) => {
-    setNotifications((prevNotifications) => [...prevNotifications, message]); // Add the new notification
+    setNotifications((prevNotifications) => [...prevNotifications, message]);
 
     setTimeout(() => {
       setNotifications((prevNotifications) =>

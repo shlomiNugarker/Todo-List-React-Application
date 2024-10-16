@@ -8,7 +8,6 @@ import {
 } from "@tanstack/react-table";
 import { useMemo } from "react";
 import { Task } from "../types";
-import MemoizedTableRow from "./MemoizedTableRow";
 import { DeleteIcon, EditIcon } from "./Icons";
 
 interface Props {
@@ -24,6 +23,19 @@ const priorityOrder = {
   Medium: 2,
   Low: 3,
   All: 4,
+};
+
+const getRowClassByPriority = (priority: string) => {
+  switch (priority) {
+    case "High":
+      return "text-red-500";
+    case "Medium":
+      return "text-yellow-300";
+    case "Low":
+      return "text-green-500 ";
+    default:
+      return "";
+  }
 };
 
 const TodoListTable = ({
@@ -100,9 +112,9 @@ const TodoListTable = ({
     "text-center px-3 py-2 sm:px-6 sm:py-3 bg-gray-50 bg-gray-800 cursor-pointer text-xl sm:text-l";
 
   return (
-    <div className="w-full relative overflow-x-auto shadow-md rounded-lg   ">
+    <div className="w-full relative overflow-x-auto shadow-md rounded-lg">
       {tasks.length === 0 ? (
-        <div className="flex justify-center items-center ">
+        <div className="flex justify-center items-center">
           <p>No tasks available</p>
         </div>
       ) : (
@@ -111,7 +123,7 @@ const TodoListTable = ({
             {table.getHeaderGroups().map((headerGroup) => (
               <tr
                 key={headerGroup.id}
-                className={"flex flex-col sm:table-row text-2xl " + ""}
+                className={"flex flex-col sm:table-row text-2xl"}
               >
                 {headerGroup.headers.map((header) => (
                   <th
@@ -140,7 +152,21 @@ const TodoListTable = ({
           </thead>
           <tbody className="bg-gray-900">
             {table.getRowModel().rows.map((row) => (
-              <MemoizedTableRow key={row.id} row={row} />
+              <tr
+                key={row.id}
+                className={`flex flex-col sm:table-row hover:bg-gray-700 ${getRowClassByPriority(
+                  row.original.priority
+                )}`}
+              >
+                {row.getVisibleCells().map((cell) => (
+                  <td
+                    key={cell.id}
+                    className="truncate text-center px-3 py-2 sm:px-6 sm:py-1 font-medium whitespace-nowrap text-wrap"
+                  >
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>
+                ))}
+              </tr>
             ))}
           </tbody>
         </table>
