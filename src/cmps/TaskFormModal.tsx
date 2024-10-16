@@ -15,6 +15,7 @@ const TaskFormModal = ({ saveTask, close, task }: Props) => {
   const [errors, setErrors] = useState<{ task?: string; assignee?: string }>(
     {}
   );
+  const [isClosing, setIsClosing] = useState(false);
 
   const taskInputRef = useRef<HTMLInputElement>(null);
 
@@ -55,9 +56,28 @@ const TaskFormModal = ({ saveTask, close, task }: Props) => {
     ev.preventDefault();
 
     if (validateForm()) {
-      saveTask(taskToSave);
+      setIsClosing(true);
+      setTimeout(() => {
+        saveTask(taskToSave);
+      }, 300);
     }
   };
+
+  const handleClose = (
+    ev:
+      | React.MouseEvent<HTMLDivElement, MouseEvent>
+      | React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    ev.stopPropagation();
+    setIsClosing(true);
+    setTimeout(() => {
+      close();
+    }, 300);
+  };
+
+  const anumationClass = ` ${
+    isClosing ? "animate-fade-out-scale" : "animate-fade-in-scale"
+  }`;
 
   return (
     <>
@@ -65,20 +85,23 @@ const TaskFormModal = ({ saveTask, close, task }: Props) => {
         onSubmit={handleSubmit}
         className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed  z-50 outline-none focus:outline-none min-w-[30vw]"
       >
-        <div className="relative my-6 mx-auto max-w-3xl border-0 rounded-lg shadow-lg flex flex-col w-full bg-gray-800 text-white outline-none focus:outline-none">
+        <div
+          className={`relative my-6 mx-auto max-w-3xl border-0 rounded-lg shadow-lg flex flex-col w-full bg-gray-800 text-white outline-none focus:outline-none transition-transform
+            ${anumationClass}`}
+        >
           {/* Header */}
-          <div className="flex items-start justify-between p-5 border-b  border-gray-700 rounded-t">
+          <div className="flex items-start justify-between p-5 border-b border-gray-700 rounded-t">
             <h3 className="text-2xl font-semibold">
               {taskToSave.id ? "Edit Task" : "Add Task"}
             </h3>
-            <button
+            <div
               className="flex items-center absolute top-3 right-2.5 text-gray-400 bg-transparent rounded-lg text-sm w-8 h-8  justify-center items-cente hover:bg-gray-600 hover:text-white"
-              onClick={close}
+              onClick={handleClose}
             >
               <span className="bg-transparent text-white h-6 w-6 text-2xl  outline-none focus:outline-none flex justify-center items-center">
                 <CloseIcon className="w-3 h-3" />
               </span>
-            </button>
+            </div>
           </div>
 
           {/* Body */}
@@ -111,17 +134,14 @@ const TaskFormModal = ({ saveTask, close, task }: Props) => {
           {/* Footer */}
           <div className="flex items-center justify-end p-6 border-t border-gray-700 rounded-b">
             <button
-              className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1"
               type="button"
-              onClick={(ev) => {
-                ev.stopPropagation();
-                close();
-              }}
+              onClick={handleClose}
             >
               Cancel
             </button>
             <button
-              className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              className="bg-emerald-500 text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg focus:outline-none mr-1 mb-1"
               type="submit"
             >
               Save
@@ -130,11 +150,8 @@ const TaskFormModal = ({ saveTask, close, task }: Props) => {
         </div>
       </form>
       <div
-        onClick={(ev) => {
-          ev.stopPropagation();
-          close();
-        }}
-        className="fixed inset-0 z-40 bg-slate-900 bg-opacity-50 backdrop-blur-sm"
+        onClick={handleClose}
+        className={`fixed inset-0 z-40 bg-slate-900 bg-opacity-50 backdrop-blur-sm ${anumationClass}`}
       ></div>
     </>
   );

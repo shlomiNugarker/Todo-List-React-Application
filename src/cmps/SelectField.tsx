@@ -31,7 +31,7 @@ export const SelectField = ({
         aria-label={`${label} Level`}
       >
         {options.map((option) => (
-          <option key={option} value={option}>
+          <option key={option} value={option} className="hover:bg-blue-600">
             {option}
           </option>
         ))}
