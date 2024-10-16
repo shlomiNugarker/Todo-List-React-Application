@@ -12,7 +12,7 @@ A simple task management application built with **React**, **TypeScript**, and *
 
 ## Demo
 
-You can view a live demo of the app here: [Live Demo](https://shlominugarker.github.io/Todo-List-React-Application/)
+You can view a live demo of the app here: [Live Demo](https://shlominugarker.github.io/todo-list-react-application/)
 
 ## Installation
 
@@ -26,8 +26,8 @@ Make sure you have the following installed:
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/shlomiNugarker/Todo-List-React-Application.git
-cd Todo-List-React-Application
+git clone https://github.com/shlomiNugarker/todo-list-react-application.git
+cd todo-list-react-application
 ```
 
 ### Install Dependencies
