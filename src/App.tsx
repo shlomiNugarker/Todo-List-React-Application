@@ -21,7 +21,7 @@ function App() {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [assigneeFilter, setAssigneeFilter] = useState<string>("All");
   const [priorityFilter, setPriorityFilter] = useState<Priority>("All");
-  const [notification, setNotification] = useState<string | null>(null);
+  const [notifications, setNotifications] = useState<string[]>([]); // Array of notifications
 
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
@@ -70,12 +70,13 @@ function App() {
   };
 
   const showNotification = (message: string) => {
-    setNotification(message);
-    const timeoutId = setTimeout(() => {
-      setNotification(null);
-    }, 3000);
+    setNotifications((prevNotifications) => [...prevNotifications, message]); // Add the new notification
 
-    return () => clearTimeout(timeoutId);
+    setTimeout(() => {
+      setNotifications((prevNotifications) =>
+        prevNotifications.filter((notif) => notif !== message)
+      );
+    }, 3000);
   };
 
   const saveTask = (task: Task) => {
@@ -145,11 +146,16 @@ function App() {
           />
         </div>
 
-        {notification && (
-          <div className="fixed top-4 right-4 bg-emerald-500 text-white p-3 rounded-lg shadow-md z-50">
-            {notification}
-          </div>
-        )}
+        <div className="fixed top-4 right-4 space-y-2 z-50">
+          {notifications.map((notif, index) => (
+            <div
+              key={index}
+              className="bg-emerald-500 text-white p-3 rounded-lg shadow-md"
+            >
+              {notif}
+            </div>
+          ))}
+        </div>
       </main>
     </>
   );
